@@ -79,7 +79,8 @@ public class Ltpa2Token
 	public void setExpire(@NonNull final String expire)
 	{
 		Assert.hasText(expire, "expire must not be empty");
-		this.expire = LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.valueOf(expire)), ZoneId.systemDefault());
+		String[] expireArray = expire.split("[|]");
+		this.expire = LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.valueOf(expireArray[expireArray.length-1])), ZoneId.systemDefault());
 	}
 	
 

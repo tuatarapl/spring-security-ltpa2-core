@@ -41,6 +41,17 @@ public class Ltpa2TokenTest
 		assertThat(actual.getExpire()).isEqualToIgnoringNanos(LocalDateTime.of(2018, 2, 19, 13, 31, 00));
 		assertThat(actual.getAttribute("attribute")).isEqualTo("value");
 	}
+
+	@Test
+	public void testOfMultipleExpirations()
+	{
+		String serializedToken = "expire:0|1|1519043460000$attribute:value$u:user\\:LdapRegistry/CN=fae6d87c-c642-45a6-9f09-915c7fd8b08c,OU=user,DC=foo,DC=bar";
+		Ltpa2Token actual = Ltpa2Token.of(serializedToken);
+		assertThat(actual).isNotNull();
+		assertThat(actual.getAttribute(Ltpa2Token.USER_ATTRIBUTE_NAME)).isEqualTo("user:LdapRegistry/CN=fae6d87c-c642-45a6-9f09-915c7fd8b08c,OU=user,DC=foo,DC=bar");
+		assertThat(actual.getExpire()).isEqualToIgnoringNanos(LocalDateTime.of(2018, 2, 19, 13, 31, 00));
+		assertThat(actual.getAttribute("attribute")).isEqualTo("value");
+	}
 	
 	@Test
 	public void testToString()
